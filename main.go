@@ -71,6 +71,7 @@ func main() {
 			}
 		}
 		respBody := strings.Split(resp.String(), ",")
+		fmt.Println("DELETE respBody =", respBody)
 		FillStruct(&value, respBody)
 		time.Sleep(interval)
 	}

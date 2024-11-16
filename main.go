@@ -21,6 +21,7 @@ type Values struct {
 }
 
 func FillStruct(s *Values, array []string) {
+	fmt.Printf("DELETE Input array: %v\n", array)
 	s.LoadAvg, _ = strconv.Atoi(array[0])
 	if s.LoadAvg > 30 {
 		fmt.Printf("Load Average is too high: %d\n", s.LoadAvg)
@@ -55,9 +56,11 @@ func main() {
 	for {
 		value := Values{}
 		resp, err := client.R().Get(url)
+		fmt.Println("DELETE resp =", resp)
 		if err != nil {
 			panic(err)
 		}
+		fmt.Println("DELETE resp =", resp)
 		if resp.StatusCode() != http.StatusOK || resp.Header().Get("Content-Type") != "text/plain" {
 			if i == 3 {
 				fmt.Println("Unable to fetch server statistic")

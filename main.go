@@ -56,11 +56,12 @@ func main() {
 	for {
 		value := Values{}
 		resp, err := client.R().Get(url)
-		fmt.Println("DELETE resp =", resp)
 		if err != nil {
 			panic(err)
 		}
 		fmt.Println("DELETE resp =", resp)
+		fmt.Println("DELETE Status Code:", resp.StatusCode())
+		fmt.Println("DELETE Content-Type:", resp.Header().Get("Content-Type"))
 		if resp.StatusCode() != http.StatusOK || resp.Header().Get("Content-Type") != "text/plain" {
 			if i == 3 {
 				fmt.Println("Unable to fetch server statistic")
@@ -70,6 +71,7 @@ func main() {
 				continue
 			}
 		}
+		fmt.Println("DELETE Response body:", resp.String())
 		respBody := strings.Split(resp.String(), ",")
 		fmt.Println("DELETE respBody =", respBody)
 		FillStruct(&value, respBody)

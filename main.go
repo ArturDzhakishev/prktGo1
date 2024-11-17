@@ -62,7 +62,7 @@ func main() {
 		fmt.Println("DELETE resp =", resp)
 		fmt.Println("DELETE Status Code:", resp.StatusCode())
 		fmt.Println("DELETE Content-Type:", resp.Header().Get("Content-Type"))
-		if resp.StatusCode() != http.StatusOK || resp.Header().Get("Content-Type") != "text/plain" {
+		if resp.StatusCode() != http.StatusOK || !strings.HasPrefix(resp.Header().Get("Content-Type"), "text/plain") {
 			if i == 3 {
 				fmt.Println("Unable to fetch server statistic")
 				break

@@ -21,6 +21,7 @@ type Values struct {
 }
 
 func FillStruct(s *Values, array []string) {
+	fmt.Println("DELETE Input array:", array)
 	s.LoadAvg, _ = strconv.Atoi(array[0])
 	if s.LoadAvg > 30 {
 		fmt.Printf("Load Average is too high: %d\n", s.LoadAvg)
@@ -35,13 +36,14 @@ func FillStruct(s *Values, array []string) {
 	s.Diskcap, _ = strconv.Atoi(array[3])
 	s.Diskcons, _ = strconv.Atoi(array[4])
 	if disk := float64(s.Diskcons) / float64(s.Diskcap); disk > 0.9 {
-		disk = (float64(s.Diskcons) - float64(s.Diskcap)) / 1048576
+		disk = (float64(s.Diskcap) - float64(s.Diskcons)) / 1048576
 		diskint := int(disk)
-		fmt.Printf("Memory usage too high: %d%%\n", diskint)
+		fmt.Printf("Free disk space is too low: %d Mb left\n", diskint)
 	}
 	s.NetworkBand, _ = strconv.Atoi(array[5])
 	s.Network, _ = strconv.Atoi(array[6])
 	if network := float64(s.Network) / float64(s.NetworkBand); network > 0.9 {
+		network = (float64(s.NetworkBand) - float64(s.Network)) / 1048576
 		networkint := int(network)
 		fmt.Printf("Network bandwidth usage high: %d Mbit/s available\n", networkint)
 	}
